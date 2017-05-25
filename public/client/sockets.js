@@ -3,6 +3,7 @@ const socket = io(window.location.origin);
 const context = new AudioContext;
 
 const keys = {};
+let bass = false;
 
 socket.on('connect', function(){});
 socket.on('event', function(data){});
@@ -75,9 +76,10 @@ window.addEventListener('keydown', () => {
   let freq;
   let key = event.keyCode;
 
-
-  if (keyboard[key]) {
+  if (!bass && keyboard[key]) {
     freq = keyboard[key];
+  } else if (bass && bassKeyboard[key]) {
+    freq = bassKeyboard[key];
   }
 
   if (freq && !keys[key]) {
@@ -88,3 +90,10 @@ window.addEventListener('keydown', () => {
     console.log('Do you even play, bro?')
   }
 });
+
+const button = document.getElementById('bass');
+button.addEventListener('click', () => {
+  bass = !bass;
+  if (bass) button.innerHTML = 'bass: ON';
+  else button.innerHTML = 'bass: OFF';
+})
