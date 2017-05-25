@@ -6,11 +6,10 @@
 }
 
 .box {
-  height: 200px;
-  width: 75px;
+  height: 150px;
+  width: 70px;
   background-color: pink;
-  border-color: black;
-  border-width: 1;
+  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;

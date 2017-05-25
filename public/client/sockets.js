@@ -9,20 +9,48 @@ socket.on('event', function(data){});
 socket.on('disconnect', function(){});
 
 socket.on('start', obj => {
-  const key = obj.key;
-  const oscillator = context.createOscillator();
-  oscillator.type = 'triangle';
-  oscillator.frequency.value = obj.freq;
-  oscillator.connect(context.destination);
-  oscillator.start(0);
-  keys[key] = oscillator;
-  let box = document.getElementById(`${key}`);
-  box.style.backgroundColor = 'purple';
+
+  if (obj.key === 32) { // if key is space, begin vibrato on active notes
+    Object.keys(keys).forEach(key => {
+      const modulator = context.createOscillator();
+      const modulatorGain = context.createGain();
+
+      modulator.frequency.value = 6; // vibrato rate
+      modulatorGain.gain.value = 2; // vibrato depth
+
+      modulator.connect(modulatorGain);
+      modulatorGain.connect(keys[key][0].frequency);
+
+      modulator.start(0);
+    })
+  } else {
+    // create main oscillator
+    const oscillator = context.createOscillator();
+    oscillator.type = 'triangle';
+    oscillator.frequency.value = obj.freq;
+
+    const envelope = context.createGain();
+    envelope.gain = 0;
+    oscillator.connect(envelope);
+    envelope.connect(context.destination);
+    oscillator.start(0); // start main OSC silently
+    envelope.gain.setValueAtTime(0.1, context.currentTime); // gain of -20db
+
+    // push oscillator and gain objects to keys store
+    keys[obj.key] = [oscillator, envelope];
+
+    // set front end view
+    let box = document.getElementById(`${obj.key}`);
+    box.style.backgroundColor = 'purple';
+  }
+
 });
 
 socket.on('stopped', ({key}) => {
   if (keys[key]) {
-    keys[key].stop(0);
+    // once key is let go, ramp the gain down to 0 over 0.1 seconds
+    keys[key][1].gain.setValueAtTime(0.1, context.currentTime);
+    keys[key][1].gain.linearRampToValueAtTime(0, context.currentTime + 0.1);
     delete keys[key];
     let box = document.getElementById(`${key}`);
     box.style.backgroundColor = 'pink';
@@ -37,7 +65,7 @@ window.addEventListener('keyup', () => {
 window.addEventListener('keydown', () => {
   let freq;
   let key = event.keyCode;
-
+  
   if (chromatic[key]) {
     freq = chromatic[key];
   } else if (aBlues[key]) {
