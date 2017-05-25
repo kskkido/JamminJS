@@ -16,7 +16,7 @@ socket.on('start', obj => {
       const modulatorGain = context.createGain();
 
       modulator.frequency.value = 6; // vibrato rate
-      modulatorGain.gain.value = 2; // vibrato depth
+      modulatorGain.gain.value = 4; // vibrato depth
 
       modulator.connect(modulatorGain);
       modulatorGain.connect(keys[key][0].frequency);
