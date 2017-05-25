@@ -44,7 +44,7 @@ socket.on('start', obj => {
 
     // set front end view
     let box = document.getElementById(`${obj.key}`);
-    box.style.backgroundColor = 'purple';
+    box.style.backgroundColor = 'pink';
   }
 });
 
@@ -63,7 +63,8 @@ socket.on('stopped', ({key}) => {
     keys[key][1].gain.linearRampToValueAtTime(0, context.currentTime + 0.1);
     delete keys[key];
     let box = document.getElementById(`${key}`);
-    box.style.backgroundColor = 'pink';
+    if (box.className.includes('dark')) box.style.backgroundColor = '#dddddd';
+    else box.style.backgroundColor = 'floralwhite';
   }
 });
 

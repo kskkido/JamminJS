@@ -6,11 +6,23 @@
 }
 
 .box {
-  height: 150px;
+  height: 70px;
   width: 70px;
-  background-color: pink;
+  background-color: floralwhite;
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dark {
+  background-color: #dddddd;
+}
+
+.wide {
+  width: 110px;
+}
+
+.unused {
+  background-color: #737373;
 }
