@@ -81,13 +81,13 @@ window.addEventListener('keydown', () => {
     freq = aBlues[key];
   } else if (key === 18) {
     console.log('Cool, vibrato!');
-  } else {
-    console.log('Do you even play, bro?');
   }
 
   if (freq && !keys[key]) {
     socket.emit('note', {freq, key});
   } else if (key === 18) {
     socket.emit('note', {key});
+  } else {
+    console.log('Do you even play, bro?')
   }
 });
