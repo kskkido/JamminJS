@@ -65,7 +65,7 @@ window.addEventListener('keyup', () => {
 window.addEventListener('keydown', () => {
   let freq;
   let key = event.keyCode;
-  
+
   if (chromatic[key]) {
     freq = chromatic[key];
   } else if (aBlues[key]) {
@@ -75,6 +75,8 @@ window.addEventListener('keydown', () => {
   }
 
   if (freq && !keys[key]) {
-    socket.emit('note', {freq, key: event.keyCode});
+    socket.emit('note', {freq, key});
+  } else if (key === 32) {
+    socket.emit('note', {key});
   }
 });
