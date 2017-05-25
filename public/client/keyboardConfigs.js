@@ -1,16 +1,17 @@
 const chromatic = {
-  49: notes.C4,
-  50: notes.Db4,
-  51: notes.D4,
-  52: notes.Eb4,
-  53: notes.E4,
-  54: notes.F4,
-  55: notes.Gb4,
-  56: notes.G4,
-  57: notes.Ab4,
-  48: notes.A4,
-  189: notes.Bb4,
-  187: notes.B4
+  192: notes.C4,
+  49: notes.Db4,
+  50: notes.D4,
+  51: notes.Eb4,
+  52: notes.E4,
+  53: notes.F4,
+  54: notes.Gb4,
+  55: notes.G4,
+  56: notes.Ab4,
+  57: notes.A4,
+  48: notes.Bb4,
+  189: notes.B4,
+  187: notes.C5
 };
 
 // this is false because Dean.
@@ -29,6 +30,56 @@ const aBlues = {
   221: notes.E5
 }
 
-const recordingKeys = [
-  90, 88, 67, 86, 66, 78, 77, 188, 190, 191
-]
+const keyboard = {
+  49: notes.Gb3,
+  81: notes.G3,
+  50: notes.Ab3,
+  87: notes.A3,
+  51: notes.Bb3,
+  69: notes.B3,
+  82: notes.C4,
+  53: notes.Db4,
+  84: notes.D4,
+  54: notes.Eb4,
+  89: notes.E4,
+  85: notes.F4,
+  56: notes.Gb4,
+  73: notes.G4,
+  57: notes.Ab4,
+  79: notes.A4,
+  48: notes.Bb4,
+  80: notes.B4,
+  219: notes.C5,
+  187: notes.Db5,
+  221: notes.D5,
+  8: notes.Eb5,
+  220: notes.E5,
+}
+
+const bassKeyboard = {
+  49: notes.Gb1,
+  81: notes.G1,
+  50: notes.Ab1,
+  87: notes.A1,
+  51: notes.Bb1,
+  69: notes.B1,
+  82: notes.C2,
+  53: notes.Db2,
+  84: notes.D2,
+  54: notes.Eb2,
+  89: notes.E2,
+  85: notes.F2,
+  56: notes.Gb2,
+  73: notes.G2,
+  57: notes.Ab2,
+  79: notes.A2,
+  48: notes.Bb2,
+  80: notes.B2,
+  219: notes.C3,
+  187: notes.Db3,
+  221: notes.D3,
+  8: notes.Eb3,
+  220: notes.E3,
+};
+
+const recordingKeys = [90, 88, 67, 86, 66, 78, 77, 188, 190, 191]

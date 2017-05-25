@@ -6,34 +6,39 @@
 </head>
 <body>
 	<h1 id='test'>welcome to socket synth!</h1>
+	<button id='bass'>bass: OFF</button>
 	<div class="flex">
-		<div id="49" class="box"> 1 (C3) </div>
-		<div id="50" class="box"> 2 (C#3) </div>
-		<div id="51" class="box"> 3 (D3) </div>
-		<div id="52" class="box"> 4 (D#3) </div>
-		<div id="53" class="box"> 5 (E3) </div>
-		<div id="54" class="box"> 6 (F3) </div>
-		<div id="55" class="box"> 7 (F#3) </div>
-		<div id="56" class="box"> 8 (G3) </div>
-		<div id="57" class="box"> 9 (G#3) </div>
-		<div id="48" class="box"> 0 (A3) </div>
-		<div id="189" class="box"> - (A#3) </div>
-		<div id="187" class="box"> = (B) </div>
+		<div class="box unused"> ` </div> <!-- unused -->
+		<div id="49" class="box dark"> Gb </div>
+		<div id="50" class="box dark"> Ab </div>
+		<div id="51" class="box dark"> Bb </div>
+		<div class="box unused"> 4 </div> <!-- unused -->
+		<div id="53" class="box dark"> Db </div>
+		<div id="54" class="box dark"> Eb </div>
+		<div class="box unused"> 7 </div> <!-- unused -->
+		<div id="56" class="box dark"> Gb </div>
+		<div id="57" class="box dark"> Ab </div>
+		<div id="48" class="box dark"> Bb </div>
+		<div class="box unused"> - </div> <!-- unused -->
+		<div id="187" class="box dark"> Db </div>
+		<div id="8" class="box dark wide"> delete (Eb) </div>
 	</div>
 	<br />
 	<div class="flex">
-		<div id="81" class="box"> Q (G2) </div>
-		<div id="87" class="box"> W (A3) </div>
-		<div id="69" class="box"> E (C3) </div>
-		<div id="82" class="box"> R (D3) </div>
-		<div id="84" class="box"> T (Eb3) </div>
-		<div id="89" class="box"> Y (E3) </div>
-		<div id="85" class="box"> U (G3) </div>
-		<div id="73" class="box"> I (A4) </div>
-		<div id="79" class="box"> O (C4) </div>
-		<div id="80" class="box"> P (D4) </div>
-		<div id="219" class="box"> [ (Eb4) </div>
-		<div id="221" class="box"> ] (E4) </div>
+		<div class="box wide unused"> tab </div> <!-- unused -->
+		<div id="81" class="box"> G </div>
+		<div id="87" class="box"> A </div>
+		<div id="69" class="box"> B </div>
+		<div id="82" class="box"> C </div>
+		<div id="84" class="box"> D </div>
+		<div id="89" class="box"> E </div>
+		<div id="85" class="box"> F </div>
+		<div id="73" class="box"> G </div>
+		<div id="79" class="box"> A </div>
+		<div id="80" class="box"> B </div>
+		<div id="219" class="box"> C </div>
+		<div id="221" class="box"> D </div>
+		<div id="220" class="box"> E </div>
 	</div>
 
 	<script src="/socket.io/socket.io.js"></script>
