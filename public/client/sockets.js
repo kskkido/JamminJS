@@ -66,10 +66,8 @@ window.addEventListener('keydown', () => {
   let freq;
   let key = event.keyCode;
 
-  if (chromatic[key]) {
-    freq = chromatic[key];
-  } else if (aBlues[key]) {
-    freq = aBlues[key];
+  if (keyboard[key]) {
+    freq = keyboard[key];
   }
 
   if (freq && !keys[key]) {
