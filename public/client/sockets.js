@@ -10,35 +10,34 @@ socket.on('disconnect', function(){});
 
 socket.on('start', obj => {
 
-  if (obj.key === 32) {
-    console.log("objectkeys", Object.keys(keys));
+  if (obj.key === 32) { // if key is space, begin vibrato on active notes
     Object.keys(keys).forEach(key => {
       const modulator = context.createOscillator();
-      modulator.frequency.value = 6; // vibrato rate
-
       const modulatorGain = context.createGain();
+
+      modulator.frequency.value = 6; // vibrato rate
       modulatorGain.gain.value = 2; // vibrato depth
+
       modulator.connect(modulatorGain);
-      console.log("key[0]", keys[key][0])
       modulatorGain.connect(keys[key][0].frequency);
 
       modulator.start(0);
     })
   } else {
     // create main oscillator
-    const mainOSC = context.createOscillator();
-    mainOSC.type = 'triangle';
-    mainOSC.frequency.value = obj.freq;
+    const oscillator = context.createOscillator();
+    oscillator.type = 'triangle';
+    oscillator.frequency.value = obj.freq;
 
     const envelope = context.createGain();
     envelope.gain = 0;
-    mainOSC.connect(envelope);
+    oscillator.connect(envelope);
     envelope.connect(context.destination);
-    mainOSC.start(0); // start main OSC silently
+    oscillator.start(0); // start main OSC silently
     envelope.gain.setValueAtTime(0.1, context.currentTime); // gain of -20db
 
     // push oscillator and gain objects to keys store
-    keys[obj.key] = [mainOSC, envelope];
+    keys[obj.key] = [oscillator, envelope];
 
     // set front end view
     let box = document.getElementById(`${obj.key}`);
@@ -48,7 +47,6 @@ socket.on('start', obj => {
 });
 
 socket.on('stopped', ({key}) => {
-  // console.log('keyobj', keys[key]);
   if (keys[key]) {
     // once key is let go, ramp the gain down to 0 over 0.1 seconds
     keys[key][1].gain.setValueAtTime(0.1, context.currentTime);
