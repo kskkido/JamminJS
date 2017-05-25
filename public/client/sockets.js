@@ -1,22 +1,8 @@
 const socket = io(window.location.origin);
 
 const context = new AudioContext;
-const recorder = {isRecording: false, targetKey: null}
 
 const keys = {};
-
-const recorderKeys = {
-  90: {frequencies: [], isPlaying: false},
-  88: {frequencies: [], isPlaying: false},
-  67: {frequencies: [], isPlaying: false},
-  86: {frequencies: [], isPlaying: false},
-  66: {frequencies: [], isPlaying: false},
-  78: {frequencies: [], isPlaying: false},
-  77: {frequencies: [], isPlaying: false},
-  188: {frequencies: [], isPlaying: false},
-  190: {frequencies: [], isPlaying: false},
-  191: {frequencies: [], isPlaying: false}
-}
 
 socket.on('connect', function(){});
 socket.on('event', function(data){});
@@ -24,6 +10,7 @@ socket.on('disconnect', function(){});
 
 socket.on('start', obj => {
 
+  console.log('SOCKETS', obj)
   if (obj.key === 32) { // if key is space, begin vibrato on active notes
     Object.keys(keys).forEach(key => {
       const modulator = context.createOscillator();
@@ -73,13 +60,23 @@ socket.on('stopped', ({key}) => {
 
 window.addEventListener('keyup', () => {
   let key = event.keyCode;
+
   if (key === 16) {
-    if (recorder.targetKey) {
-      recordTo(recorder.targetKey)
+    if (recorder.recordingKey) {
+      storeRecording()
     }
-    console.log(recorder)
-    recorder.targetKey = null
     recorder.isRecording = false
+    return
+  } else if (key === recorder.recordingKey) {
+    recorder.recordingKey = null
+    return
+  } 
+
+  if (recorderKeys[key] && recorderKeys[key].length > 0) {
+    recorderKeys[key].forEach(({key}) => {
+      console.log(key)
+      socket.emit('stop', {key})
+    })
     return
   }
 
@@ -94,8 +91,17 @@ window.addEventListener('keydown', () => {
     freq = chromatic[key];
   } else if (aBlues[key]) {
     freq = aBlues[key];
-  } else {
-    console.log('Do you even play, bro?')
+  }
+
+  if (freq) {
+    console.log(freq)
+    recordTo(freq, key)
+  } 
+
+  if (key === 16) {
+    recorder.isRecording = true
+  } else if (recordingKeys.includes(key)) {
+    checkRecorder(key)
   }
 
   if (freq && !keys[key]) {
@@ -104,34 +110,3 @@ window.addEventListener('keydown', () => {
     socket.emit('note', {key});
   }
 });
-
-
-function recordTo(targetKey) {
-  const keyList = Object.keys(keys)
-  console.log(keys)
-
-  if (recorderKeys[targetKey].length > 0) {
-    clearRecording(targetKey)
-  }
-
-  for (const key in keyList) {
-    const freq = 440
-    console.log(freq)
-    if (freq) {
-      recorderKeys[targetKey].frequencies.push({freq, key})
-    }
-  }
-}
-
-function toggleRecordingPlay(targetKey) {
-  const isPlaying = recorderKeys[targetKey].isPlaying
-  console.log(recorderKeys[targetKey])
-  recorderKeys[targetKey].frequencies.forEach(({freq, key}) => {
-    isPlaying ? socket.emit('stop', {key}) : socket.emit('start', {freq, key})
-  })
-}
-
-function clearRecording(targetKey) {
-  recorderKeys[targetKey].frequencies = []
-  recorderKeys[targetKey].isPlaying = false
-}

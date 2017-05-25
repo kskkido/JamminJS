@@ -28,3 +28,7 @@ const aBlues = {
   219: notes.Eb5,
   221: notes.E5
 }
+
+const recordingKeys = [
+  90, 88, 67, 86, 66, 78, 77, 188, 190, 191
+]
