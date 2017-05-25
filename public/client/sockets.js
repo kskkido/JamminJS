@@ -76,6 +76,45 @@ window.addEventListener('keydown', () => {
     case 187:
       freq = 493.88;
       break;
+
+     // Qwertyuiop[] (blues scale in A)
+    case 81: // Q
+      freq = 195.998; // G2
+      break;
+    case 87: // W
+      freq = 220.000; // A3
+      break;
+    case 69: // E
+      freq = 261.626; // C3
+      break;
+    case 82: // R
+      freq = 293.665; // D3
+      break;
+    case 84: // T
+      freq = 311.127; // Eb3
+      break;
+    case 89: // Y
+      freq = 329.63; // E3
+      break;
+    case 85: // U
+      freq = 392.00; // G3
+      break;
+    case 73: // I
+      freq = 440; // A4
+      break;
+    case 79: // O
+      freq = 523.251; // C4
+      break;
+    case 80: // P
+      freq = 587.330; // D4
+      break;
+    case 219: // [
+      freq = 622.254; // Eb4
+      break;
+    case 221: // ]
+      freq = 659.255; // E4
+      break;
+
     default:
       console.log('Do you even play, bro?')
   }
