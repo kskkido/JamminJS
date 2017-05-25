@@ -1,8 +1,22 @@
 const socket = io(window.location.origin);
 
 const context = new AudioContext;
+const recorder = {isRecording: false, targetKey: null}
 
 const keys = {};
+
+const recorderKeys = {
+  90: {frequencies: [], isPlaying: false},
+  88: {frequencies: [], isPlaying: false},
+  67: {frequencies: [], isPlaying: false},
+  86: {frequencies: [], isPlaying: false},
+  66: {frequencies: [], isPlaying: false},
+  78: {frequencies: [], isPlaying: false},
+  77: {frequencies: [], isPlaying: false},
+  188: {frequencies: [], isPlaying: false},
+  190: {frequencies: [], isPlaying: false},
+  191: {frequencies: [], isPlaying: false}
+}
 
 socket.on('connect', function(){});
 socket.on('event', function(data){});
@@ -31,6 +45,16 @@ socket.on('stopped', ({key}) => {
 
 window.addEventListener('keyup', () => {
   let key = event.keyCode;
+  if (key === 16) {
+    if (recorder.targetKey) {
+      recordTo(recorder.targetKey)
+    }
+    console.log(recorder)
+    recorder.targetKey = null
+    recorder.isRecording = false
+    return
+  }
+
   socket.emit('stop', {key: key});
 });
 
@@ -113,6 +137,63 @@ window.addEventListener('keydown', () => {
       freq = 659.255; // E4
       break;
 
+
+    case 16:
+      recorder.isRecording = true
+      break;
+
+    case 90:
+      if(recorder.isRecording) recorder.targetKey = 90
+      else toggleRecordingPlay(90)
+      break;
+
+    case 88:
+      if(recorder.isRecording) recorder.targetKey = 88
+      else toggleRecordingPlay(88)
+      break;
+
+
+    case 67:
+      if(recorder.isRecording) recorder.targetKey = 67
+      else toggleRecordingPlay(67)
+      break;
+
+
+    case 86:
+      if(recorder.isRecording) recorder.targetKey = 86
+      else toggleRecordingPlay(86)
+      break;
+
+    case 66:
+      if(recorder.isRecording) recorder.targetKey = 66
+      else toggleRecordingPlay(66)
+      break;
+
+    case 78:
+      if(recorder.isRecording) recorder.targetKey = 78
+      else toggleRecordingPlay(78)
+      break;
+
+    case 77:
+      if(recorder.isRecording) recorder.targetKey = 77
+      else toggleRecordingPlay(77)
+      break;
+
+    case 188:
+      if(recorder.isRecording) recorder.targetKey = 188
+      else toggleRecordingPlay(188)
+      break;
+
+    case 190:
+      if(recorder.isRecording) recorder.targetKey = 190
+      else toggleRecordingPlay(190)
+      break;
+
+    case 191:
+      if(recorder.isRecording) recorder.targetKey = 191
+      else toggleRecordingPlay(191)
+      break;
+
     default:
       console.log('Do you even play, bro?');
   }
@@ -120,3 +201,34 @@ window.addEventListener('keydown', () => {
     socket.emit('note', {freq, key: event.keyCode});
   }
 });
+
+
+function recordTo(targetKey) {
+  const keyList = Object.keys(keys)
+  console.log(keys)
+
+  if (recorderKeys[targetKey].length > 0) {
+    clearRecording(targetKey)
+  }
+
+  for (const key in keyList) {
+    const freq = 440
+    console.log(freq)
+    if (freq) {
+      recorderKeys[targetKey].frequencies.push({freq, key})
+    }
+  }
+}
+
+function toggleRecordingPlay(targetKey) {
+  const isPlaying = recorderKeys[targetKey].isPlaying
+  console.log(recorderKeys[targetKey])
+  recorderKeys[targetKey].frequencies.forEach(({freq, key}) => {
+    isPlaying ? socket.emit('stop', {key}) : socket.emit('start', {freq, key})
+  })
+}
+
+function clearRecording(targetKey) {
+  recorderKeys[targetKey].frequencies = []
+  recorderKeys[targetKey].isPlaying = false
+}
