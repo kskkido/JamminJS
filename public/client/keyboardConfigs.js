@@ -54,5 +54,30 @@ const keyboard = {
   221: notes.D5,
   8: notes.Eb5,
   220: notes.E5,
-
 }
+
+const bassKeyboard = {
+  49: notes.Gb1,
+  81: notes.G1,
+  50: notes.Ab1,
+  87: notes.A1,
+  51: notes.Bb1,
+  69: notes.B1,
+  82: notes.C2,
+  53: notes.Db2,
+  84: notes.D2,
+  54: notes.Eb2,
+  89: notes.E2,
+  85: notes.F2,
+  56: notes.Gb2,
+  73: notes.G2,
+  57: notes.Ab2,
+  79: notes.A2,
+  48: notes.Bb2,
+  80: notes.B2,
+  219: notes.C3,
+  187: notes.Db3,
+  221: notes.D3,
+  8: notes.Eb3,
+  220: notes.E3,
+};
