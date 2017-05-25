@@ -75,12 +75,9 @@ window.addEventListener('keydown', () => {
   let freq;
   let key = event.keyCode;
 
-  if (chromatic[key]) {
-    freq = chromatic[key];
-  } else if (aBlues[key]) {
-    freq = aBlues[key];
-  } else if (key === 18) {
-    console.log('Cool, vibrato!');
+
+  if (keyboard[key]) {
+    freq = keyboard[key];
   }
 
   if (freq && !keys[key]) {
