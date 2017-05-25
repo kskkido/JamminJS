@@ -5,11 +5,11 @@ const socketFunction = io => {
 			console.log(obj.data)
 			io.sockets.emit('start', obj)
 		})
-		socket.on('note', note => {
-			io.sockets.emit('start', note)
+		socket.on('note', obj => {
+			io.sockets.emit('start', obj)
 		})
-		socket.on('stop', () => {
-			io.sockets.emit('stopped')
+		socket.on('stop', key => {
+			io.sockets.emit('stopped', key)
 		})
 	})
 }

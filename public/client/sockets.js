@@ -1,21 +1,28 @@
 const socket = io(window.location.origin);
 
 const context = new AudioContext;
-const oscillator = context.createOscillator();
 
+const keys = {};
 
 socket.on('connect', function(){});
 socket.on('event', function(data){});
 socket.on('disconnect', function(){});
 
-socket.on('start', receivedNote => {
-  oscillator.frequency.value = receivedNote.freq;
+socket.on('start', obj => {
+  const key = obj.key;
+  const oscillator = context.createOscillator();
+  oscillator.type = 'triangle';
+  oscillator.frequency.value = obj.freq;
   oscillator.connect(context.destination);
   oscillator.start(0);
+  keys[key] = oscillator;
 })
 
-socket.on('stopped', () => {
-  oscillator.stop(0);
+socket.on('stopped', ({key}) => {
+  if (keys[key]) {
+    keys[key].stop(0);
+    delete keys[key];
+  }
 })
 
 const button = document.getElementById('button');
@@ -25,12 +32,14 @@ button.addEventListener('click', () => {
 })
 
 window.addEventListener('keyup', () => {
-  socket.emit('stop');
+  let key = event.keyCode;
+  socket.emit('stop', {key: key});
 })
 
 window.addEventListener('keydown', () => {
   let freq;
-  switch (event.keyCode) {
+  let key = event.keyCode;
+  switch (key) {
     case 49:
       freq = 261.63;
       break;
@@ -69,9 +78,8 @@ window.addEventListener('keydown', () => {
       break;
     default:
       console.log('Do you even play, bro?')
-      console.log(event.keyCode);
   }
-  if (freq) {
-    socket.emit('note', {freq})
+  if (freq && !keys[key]) {
+    socket.emit('note', {freq, key: event.keyCode})
   }
 })
