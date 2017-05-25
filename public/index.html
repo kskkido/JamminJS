@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Socket Synth</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<h1 id='test'>hello</h1>
-	<button id='button'>CLICK ME</button>
+	<h1 id='test'>welcome to socket synth!</h1>
+	<div class="flex">
+		<div id="49" class="box"> 1 (C3) </div>
+		<div id="50" class="box"> 2 (C#3) </div>
+		<div id="51" class="box"> 3 (D3) </div>
+		<div id="52" class="box"> 4 (D#3) </div>
+		<div id="53" class="box"> 5 (E3) </div>
+		<div id="54" class="box"> 6 (F3) </div>
+		<div id="55" class="box"> 7 (F#3) </div>
+		<div id="56" class="box"> 8 (G3) </div>
+		<div id="57" class="box"> 9 (G#3) </div>
+		<div id="48" class="box"> 0 (A3) </div>
+		<div id="189" class="box"> - (A#3) </div>
+		<div id="187" class="box"> = (B) </div>
+	</div>
+	<br />
+	<div class="flex">
+		<div id="81" class="box"> Q (G2) </div>
+		<div id="87" class="box"> W (A3) </div>
+		<div id="69" class="box"> E (C3) </div>
+		<div id="82" class="box"> R (D3) </div>
+		<div id="84" class="box"> T (Eb3) </div>
+		<div id="89" class="box"> Y (E3) </div>
+		<div id="85" class="box"> U (G3) </div>
+		<div id="73" class="box"> I (A4) </div>
+		<div id="79" class="box"> O (C4) </div>
+		<div id="80" class="box"> P (D4) </div>
+		<div id="219" class="box"> [ (Eb4) </div>
+		<div id="221" class="box"> ] (E4) </div>
+	</div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/client/sockets.js"></script>
 </body>

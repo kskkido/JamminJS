@@ -16,25 +16,23 @@ socket.on('start', obj => {
   oscillator.connect(context.destination);
   oscillator.start(0);
   keys[key] = oscillator;
-})
+  let box = document.getElementById(`${key}`);
+  box.style.backgroundColor = 'purple';
+});
 
 socket.on('stopped', ({key}) => {
   if (keys[key]) {
     keys[key].stop(0);
     delete keys[key];
+    let box = document.getElementById(`${key}`);
+    box.style.backgroundColor = 'pink';
   }
-})
-
-const button = document.getElementById('button');
-
-button.addEventListener('click', () => {
-  socket.emit('clicked', {data: 5})
-})
+});
 
 window.addEventListener('keyup', () => {
   let key = event.keyCode;
   socket.emit('stop', {key: key});
-})
+});
 
 window.addEventListener('keydown', () => {
   let freq;
@@ -116,9 +114,9 @@ window.addEventListener('keydown', () => {
       break;
 
     default:
-      console.log('Do you even play, bro?')
+      console.log('Do you even play, bro?');
   }
   if (freq && !keys[key]) {
-    socket.emit('note', {freq, key: event.keyCode})
+    socket.emit('note', {freq, key: event.keyCode});
   }
-})
+});
