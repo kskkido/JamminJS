@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 
 const server = require('http').createServer(app);
-server.listen('1337', (req, res, next) => {
+server.listen('6060', (req, res, next) => {
 	console.log('CONNECTED YO')
 })
 
