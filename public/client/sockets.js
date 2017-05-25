@@ -9,29 +9,46 @@ socket.on('event', function(data){});
 socket.on('disconnect', function(){});
 
 socket.on('start', obj => {
-  // create main oscillator
-  const mainOSC = context.createOscillator();
-  mainOSC.type = 'triangle';
-  mainOSC.frequency.value = obj.freq;
 
-  const envelope = context.createGain();
-  envelope.gain = 0;
-  mainOSC.connect(envelope);
-  envelope.connect(context.destination);
-  mainOSC.start(0);
+  if (obj.key === 32) {
+    console.log("objectkeys", Object.keys(keys));
+    Object.keys(keys).forEach(key => {
+      const modulator = context.createOscillator();
+      modulator.frequency.value = 6; // vibrato rate
 
-  envelope.gain.setValueAtTime(0.1, context.currentTime);
+      const modulatorGain = context.createGain();
+      modulatorGain.gain.value = 2; // vibrato depth
+      modulator.connect(modulatorGain);
+      console.log("key[0]", keys[key][0])
+      modulatorGain.connect(keys[key][0].frequency);
 
-  // push oscillator and gain objects to keys store
-  keys[obj.key] = [mainOSC, envelope];
+      modulator.start(0);
+    })
+  } else {
+    // create main oscillator
+    const mainOSC = context.createOscillator();
+    mainOSC.type = 'triangle';
+    mainOSC.frequency.value = obj.freq;
 
-  // set front end view
-  let box = document.getElementById(`${obj.key}`);
-  box.style.backgroundColor = 'purple';
+    const envelope = context.createGain();
+    envelope.gain = 0;
+    mainOSC.connect(envelope);
+    envelope.connect(context.destination);
+    mainOSC.start(0); // start main OSC silently
+    envelope.gain.setValueAtTime(0.1, context.currentTime); // gain of -20db
+
+    // push oscillator and gain objects to keys store
+    keys[obj.key] = [mainOSC, envelope];
+
+    // set front end view
+    let box = document.getElementById(`${obj.key}`);
+    box.style.backgroundColor = 'purple';
+  }
+
 });
 
 socket.on('stopped', ({key}) => {
-  console.log('keyobj', keys[key]);
+  // console.log('keyobj', keys[key]);
   if (keys[key]) {
     // once key is let go, ramp the gain down to 0 over 0.1 seconds
     keys[key][1].gain.setValueAtTime(0.1, context.currentTime);
@@ -124,6 +141,9 @@ window.addEventListener('keydown', () => {
       break;
     case 221: // ]
       freq = 659.255; // E4
+      break;
+    case 32: // space
+      freq = 440;
       break;
 
     default:
