@@ -70,13 +70,13 @@ window.addEventListener('keydown', () => {
     freq = chromatic[key];
   } else if (aBlues[key]) {
     freq = aBlues[key];
-  } else {
-    console.log('Do you even play, bro?')
   }
 
   if (freq && !keys[key]) {
     socket.emit('note', {freq, key});
   } else if (key === 32) {
     socket.emit('note', {key});
+  } else {
+    console.log('Do you even play, bro?')
   }
 });
