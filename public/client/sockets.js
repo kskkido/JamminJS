@@ -9,20 +9,33 @@ socket.on('event', function(data){});
 socket.on('disconnect', function(){});
 
 socket.on('start', obj => {
-  const key = obj.key;
-  const oscillator = context.createOscillator();
-  oscillator.type = 'triangle';
-  oscillator.frequency.value = obj.freq;
-  oscillator.connect(context.destination);
-  oscillator.start(0);
-  keys[key] = oscillator;
-  let box = document.getElementById(`${key}`);
+  // create main oscillator
+  const mainOSC = context.createOscillator();
+  mainOSC.type = 'triangle';
+  mainOSC.frequency.value = obj.freq;
+
+  const envelope = context.createGain();
+  envelope.gain = 0;
+  mainOSC.connect(envelope);
+  envelope.connect(context.destination);
+  mainOSC.start(0);
+
+  envelope.gain.setValueAtTime(0.1, context.currentTime);
+
+  // push oscillator and gain objects to keys store
+  keys[obj.key] = [mainOSC, envelope];
+
+  // set front end view
+  let box = document.getElementById(`${obj.key}`);
   box.style.backgroundColor = 'purple';
 });
 
 socket.on('stopped', ({key}) => {
+  console.log('keyobj', keys[key]);
   if (keys[key]) {
-    keys[key].stop(0);
+    // once key is let go, ramp the gain down to 0 over 0.1 seconds
+    keys[key][1].gain.setValueAtTime(0.1, context.currentTime);
+    keys[key][1].gain.linearRampToValueAtTime(0, context.currentTime + 0.1);
     delete keys[key];
     let box = document.getElementById(`${key}`);
     box.style.backgroundColor = 'pink';
