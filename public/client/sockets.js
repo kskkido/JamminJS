@@ -82,6 +82,7 @@ window.addEventListener('keyup', () => {
     playbackKeys[key].forEach(({key}) => {
       socket.emit('stop', {key})
     })
+    playbackIsPlaying = false
     return
   }
 

@@ -15,6 +15,7 @@ const playbackKeys = {
 	190: [],
 	191: [],
 }
+let playbackIsPlaying = false
 
 const frequencyHash = {}
 
@@ -51,10 +52,11 @@ function checkRecorder (targetKey) {
 }
 
 function toggleRecordingPlay(targetKey) {
-  if (playbackKeys[targetKey].length > 0) {
+  if (!playbackIsPlaying && playbackKeys[targetKey].length > 0) {
     playbackKeys[targetKey].forEach(({freq, key}) => {
       socket.emit('note', {freq, key})
     })
+    playbackIsPlaying = true
   }
 }
 
