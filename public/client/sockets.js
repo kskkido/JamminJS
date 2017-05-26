@@ -72,19 +72,18 @@ window.addEventListener('keyup', () => {
   let key = event.keyCode;
 
   if (key === 16) {
-    if (recorder.recordingKey) {
+    if (recorder.targetKey) {
       storeRecording()
     }
     recorder.isRecording = false
     return
-  } else if (key === recorder.recordingKey) {
-    recorder.recordingKey = null
+  } else if (key === recorder.targetKey) {
+    recorder.targetKey = null
     return
   } 
 
-  if (recorderKeys[key] && recorderKeys[key].length > 0) {
-    recorderKeys[key].forEach(({key}) => {
-      console.log(key)
+  if (playbackKeys[key] && playbackKeys[key].length > 0) {
+    playbackKeys[key].forEach(({key}) => {
       socket.emit('stop', {key})
     })
     return
@@ -104,7 +103,6 @@ window.addEventListener('keydown', () => {
   }
 
   if (freq) {
-    console.log(freq)
     recordTo(freq, key)
   } 
 

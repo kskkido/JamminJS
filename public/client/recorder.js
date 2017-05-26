@@ -2,8 +2,8 @@
 // find playing while recorder is toggled
 //
 
-const recorder = {isRecording: false, recordingKey: null}
-const recorderKeys = {
+const recorder = {isRecording: false, targetKey: null}
+const playbackKeys = {
 	90: [],
 	88: [],
 	67: [],
@@ -19,16 +19,15 @@ const recorderKeys = {
 let frequencyHash = {}
 
 function storeRecording() {
-  console.log(frequencyHash)
-  const recordingKey = recorder.recordingKey
-  if (recorderKeys[recordingKey].length > 0) {
-     clearRecording(recordingKey)
+  const targetKey = recorder.targetKey
+  if (playbackKeys[targetKey].length > 0) {
+     clearRecording(targetKey)
   }
   
   const keyList = Object.keys(frequencyHash)
   for (const key of keyList) {
     const freq = frequencyHash[key]
-    recorderKeys[recordingKey].push({freq, key})
+    playbackKeys[targetKey].push({freq, key})
   }
 
   frequencyHash = {}
@@ -42,26 +41,21 @@ function recordTo(freq, key) {
 
 function checkRecorder (targetKey) {
   if (recorder.isRecording) {
-    recorder.recordingKey = targetKey
+    recorder.targetKey = targetKey
   } else {
     toggleRecordingPlay(targetKey)
   }
 }
 
 function toggleRecordingPlay(targetKey) {
-  if (recorderKeys[targetKey].length > 0) {
-    recorderKeys[targetKey].forEach(({freq, key}) => {
+  if (playbackKeys[targetKey].length > 0) {
+    playbackKeys[targetKey].forEach(({freq, key}) => {
       socket.emit('note', {freq, key})
     })
   }
 }
 
 function clearRecording(targetKey) {
-  recorderKeys[targetKey].frequencies = []
-  recorderKeys[targetKey].isPlaying = false
-}
-
-function turnOnRecording() {
-  console.log('fucks')
-  recorder.isRecording = true
+  playbackKeys[targetKey].frequencies = []
+  playbackKeys[targetKey].isPlaying = false
 }
