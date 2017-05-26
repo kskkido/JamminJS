@@ -32,7 +32,6 @@ function storeRecording() {
     playbackKeys[targetKey].push({freq, key})
     delete frequencyHash[key]
   }
-
 }
 
 function record(freq, key) {
