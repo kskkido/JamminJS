@@ -6,18 +6,6 @@ const recorder = {isRecording: false, targetKey: null}
 const frequencyHash = {}
 
 let playbackIsPlaying = false
-const playbackKeys = {
-	90: [],
-	88: [],
-	67: [],
-	86: [],
-	66: [],
-	78: [],
-	77: [],
-	188: [],
-	190: [],
-	191: [],
-}
 
 function storeRecording() {
   const targetKey = recorder.targetKey

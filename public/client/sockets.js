@@ -25,7 +25,7 @@ socket.on('start', obj => {
   } else {
     // create main oscillator
     const oscillator = context.createOscillator();
-    oscillator.type = 'triangle';
+    oscillator.type = 'sawtooth';
     oscillator.frequency.value = obj.freq;
 
     const envelope = context.createGain();
@@ -105,7 +105,7 @@ window.addEventListener('keydown', () => {
 
   if (key === 16) {
     recorder.isRecording = true
-  } else if (recordingKeys.includes(key)) {
+  } else if (playbackKeys[key]) {
     checkRecorder(key)
   }
 
