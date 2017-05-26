@@ -41,7 +41,7 @@ function record(freq, key) {
   }
 }
 
-function checkRecorder (targetKey) {
+function checkRecorder(targetKey) {
   if (recorder.isRecording) {
     recorder.targetKey = targetKey
   } else {
