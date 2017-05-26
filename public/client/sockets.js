@@ -5,10 +5,6 @@ const context = new AudioContext;
 const keys = {};
 let bass = false;
 
-socket.on('connect', function(){});
-socket.on('event', function(data){});
-socket.on('disconnect', function(){});
-
 socket.on('start', obj => {
 
   if (obj.key === 18) { // if key is space, begin vibrato on active notes
@@ -29,7 +25,7 @@ socket.on('start', obj => {
   } else {
     // create main oscillator
     const oscillator = context.createOscillator();
-    oscillator.type = 'triangle';
+    oscillator.type = 'sawtooth';
     oscillator.frequency.value = obj.freq;
 
     const envelope = context.createGain();
@@ -70,6 +66,26 @@ socket.on('stopped', ({key}) => {
 
 window.addEventListener('keyup', () => {
   let key = event.keyCode;
+
+  if (key === 16) {
+    if (recorder.targetKey) {
+      storeRecording()
+    }
+    recorder.isRecording = false
+    return
+  } else if (key === recorder.targetKey) {
+    setTimeout(() => recorder.targetKey = null, 100)
+    return
+  } 
+
+  if (playbackKeys[key] && playbackKeys[key].length > 0) {
+    playbackKeys[key].forEach(({key}) => {
+      socket.emit('stop', {key})
+    })
+    playbackIsPlaying = false
+    return
+  }
+
   socket.emit('stop', {key: key});
 });
 
@@ -83,6 +99,16 @@ window.addEventListener('keydown', () => {
     freq = bassKeyboard[key];
   }
 
+  if (freq && recorder.isRecording) {
+    record(freq, key)
+  } 
+
+  if (key === 16) {
+    recorder.isRecording = true
+  } else if (playbackKeys[key]) {
+    checkRecorder(key)
+  }
+
   if (freq && !keys[key]) {
     socket.emit('note', {freq, key});
   } else if (key === 18) {
@@ -90,7 +116,7 @@ window.addEventListener('keydown', () => {
   } else {
     console.log('Do you even play, bro?')
   }
-});
+})
 
 const button = document.getElementById('bass');
 button.addEventListener('click', () => {
