@@ -16,7 +16,7 @@ const playbackKeys = {
 	191: [],
 }
 
-let frequencyHash = {}
+const frequencyHash = {}
 
 function storeRecording() {
   const targetKey = recorder.targetKey
@@ -24,17 +24,19 @@ function storeRecording() {
   if (playbackKeys[targetKey].length > 0) {
      clearRecording(targetKey)
   }
+
+  console.log(frequencyHash)
   
   const keyList = Object.keys(frequencyHash)
   for (const key of keyList) {
     const freq = frequencyHash[key]
     playbackKeys[targetKey].push({freq, key})
+    delete frequencyHash[key]
   }
 
-  frequencyHash = {}
 }
 
-function recordTo(freq, key) {
+function record(freq, key) {
   if(!frequencyHash[key]) {
     frequencyHash[key] = freq
   }

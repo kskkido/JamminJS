@@ -74,10 +74,10 @@ window.addEventListener('keyup', () => {
     recorder.isRecording = false
     return
   } else if (key === recorder.targetKey) {
-    setTimeout(() => recorder.targetKey = null, 500)
+    setTimeout(() => recorder.targetKey = null, 100)
     return
   } 
-
+  console.log(playbackKeys[key])
   if (playbackKeys[key] && playbackKeys[key].length > 0) {
     playbackKeys[key].forEach(({key}) => {
       socket.emit('stop', {key})
@@ -98,8 +98,8 @@ window.addEventListener('keydown', () => {
     freq = bassKeyboard[key];
   }
 
-  if (freq) {
-    recordTo(freq, key)
+  if (freq && recorder.isRecording) {
+    record(freq, key)
   } 
 
   if (key === 16) {
