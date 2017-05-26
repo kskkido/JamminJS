@@ -5,10 +5,6 @@ const context = new AudioContext;
 const keys = {};
 let bass = false;
 
-socket.on('connect', function(){});
-socket.on('event', function(data){});
-socket.on('disconnect', function(){});
-
 socket.on('start', obj => {
 
   if (obj.key === 18) { // if key is space, begin vibrato on active notes
@@ -78,7 +74,7 @@ window.addEventListener('keyup', () => {
     recorder.isRecording = false
     return
   } else if (key === recorder.targetKey) {
-    recorder.targetKey = null
+    setTimeout(() => recorder.targetKey = null, 500)
     return
   } 
 

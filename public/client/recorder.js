@@ -20,6 +20,7 @@ let frequencyHash = {}
 
 function storeRecording() {
   const targetKey = recorder.targetKey
+
   if (playbackKeys[targetKey].length > 0) {
      clearRecording(targetKey)
   }
@@ -56,6 +57,6 @@ function toggleRecordingPlay(targetKey) {
 }
 
 function clearRecording(targetKey) {
-  playbackKeys[targetKey].frequencies = []
-  playbackKeys[targetKey].isPlaying = false
+  playbackKeys[targetKey].forEach(freqKey => delete freqKey)
+  playbackKeys[targetKey] = []
 }
