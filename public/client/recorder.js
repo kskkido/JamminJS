@@ -45,11 +45,11 @@ function checkRecorder (targetKey) {
   if (recorder.isRecording) {
     recorder.targetKey = targetKey
   } else {
-    toggleRecordingPlay(targetKey)
+    playbackRecording(targetKey)
   }
 }
 
-function toggleRecordingPlay(targetKey) {
+function playbackRecording(targetKey) {
   if (!playbackIsPlaying && playbackKeys[targetKey].length > 0) {
     playbackKeys[targetKey].forEach(({freq, key}) => {
       socket.emit('note', {freq, key})
