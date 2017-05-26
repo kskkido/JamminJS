@@ -59,5 +59,4 @@ function playRecording(targetKey) {
 
 function clearRecording(targetKey) {
   playbackKeys[targetKey].splice(0)
-  console.log(playbackKeys[targetKey])
 }
