@@ -50,8 +50,8 @@ function checkRecorder(targetKey) {
 
 function playRecording(targetKey) {
   if (!playbackIsPlaying && playbackKeys[targetKey].length > 0) {
-    playbackKeys[targetKey].forEach(({freq, key}) => {
-      socket.emit('note', {freq, key})
+    playbackKeys[targetKey].forEach((freqKey) => {
+      socket.emit('note', freqKey)
     })
     playbackIsPlaying = true
   }
