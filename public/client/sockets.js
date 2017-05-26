@@ -77,7 +77,7 @@ window.addEventListener('keyup', () => {
     setTimeout(() => recorder.targetKey = null, 100)
     return
   } 
-  console.log(playbackKeys[key])
+
   if (playbackKeys[key] && playbackKeys[key].length > 0) {
     playbackKeys[key].forEach(({key}) => {
       socket.emit('stop', {key})
