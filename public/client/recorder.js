@@ -3,6 +3,9 @@
 //
 
 const recorder = {isRecording: false, targetKey: null}
+const frequencyHash = {}
+
+let playbackIsPlaying = false
 const playbackKeys = {
 	90: [],
 	88: [],
@@ -15,9 +18,6 @@ const playbackKeys = {
 	190: [],
 	191: [],
 }
-let playbackIsPlaying = false
-
-const frequencyHash = {}
 
 function storeRecording() {
   const targetKey = recorder.targetKey
@@ -25,8 +25,6 @@ function storeRecording() {
   if (playbackKeys[targetKey].length > 0) {
      clearRecording(targetKey)
   }
-
-  console.log(frequencyHash)
   
   const keyList = Object.keys(frequencyHash)
   for (const key of keyList) {
