@@ -35,8 +35,12 @@
   width: 430px;
 }
 
-.vibrato {
+.special {
   background-color: #ceebfd;
+}
+
+.record {
+  background-color: #fcb6b6;
 }
 
 .unused {

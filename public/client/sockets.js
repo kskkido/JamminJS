@@ -75,6 +75,7 @@ window.addEventListener('keyup', () => {
     if (recorder.targetKey) {
       storeRecording()
     }
+    document.getElementById('16').style.backgroundColor = '#ceebfd';
     recorder.isRecording = false
     return
   } else if (key === recorder.targetKey) {
@@ -108,7 +109,8 @@ window.addEventListener('keydown', () => {
   }
 
   if (key === 16) {
-    recorder.isRecording = true
+    document.getElementById('16').style.backgroundColor = 'lightskyblue';
+    recorder.isRecording = true;
   } else if (playbackKeys[key]) {
     checkRecorder(key)
   }
