@@ -23,6 +23,15 @@
   width: 110px;
 }
 
+.wider {
+  width: 130px;
+}
+
+.extra-wide {
+  width: 150px;
+  background-color: #ceebfd;
+}
+
 .unused {
   background-color: #737373;
 }

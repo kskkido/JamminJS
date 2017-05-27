@@ -8,6 +8,8 @@ let bass = false;
 socket.on('start', obj => {
 
   if (obj.key === 18) { // if key is space, begin vibrato on active notes
+    document.getElementById('18').style.backgroundColor = 'lightskyblue';
+
     Object.keys(keys).forEach(key => {
       const modulator = context.createOscillator();
       const modulatorGain = context.createGain();
@@ -46,6 +48,8 @@ socket.on('start', obj => {
 
 socket.on('stopped', ({key}) => {
   if (key === 18) { // if alt/option key is released, remove all vibratos from active notes
+    document.getElementById('18').style.backgroundColor = '#ceebfd';
+
     Object.keys(keys).forEach(currKey => {
       if (keys[currKey][2]) {
         console.log(keys[currKey][2]);
@@ -76,7 +80,7 @@ window.addEventListener('keyup', () => {
   } else if (key === recorder.targetKey) {
     setTimeout(() => recorder.targetKey = null, 100)
     return
-  } 
+  }
 
   if (playbackKeys[key] && playbackKeys[key].length > 0) {
     playbackKeys[key].forEach(({key}) => {
@@ -101,7 +105,7 @@ window.addEventListener('keydown', () => {
 
   if (freq && recorder.isRecording) {
     record(freq, key)
-  } 
+  }
 
   if (key === 16) {
     recorder.isRecording = true
